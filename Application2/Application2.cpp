@@ -1,8 +1,7 @@
 //  Simple minded matrix multiply
 #include <stdio.h>
 #include "multiply_d.h"
-
-//#include <emmintrin.h>
+#include <time.h> 
 
 static double  a[NUM][NUM], b[NUM][NUM], c[NUM][NUM], a2[NUM][NUM], a2b[NUM][NUM], c2[NUM][NUM], res[NUM][NUM];
 
@@ -46,16 +45,34 @@ int main()
 
 	//start timing the matrix multiply code
 	printf("NUM:%d\n", NUM);
+	//omp_set_num_threads(1);
 	for (size_t i = 0; i < 5; i++)
 	{
-		start = omp_get_wtime();
+		start = clock();
 		multiply_d(a, a, a2);
 		multiply_d(a2, b, a2b);
 		multiply_d(c, c, c2);
 		sum_d(a2b, c2, res);
-		stop = omp_get_wtime();
-		printf("Elapsed time = %lf seconds\n", ((double)(stop - start)));
+		stop = clock();
+		printf("Elapsed time = %lf seconds\n", ((double)(stop - start))/1000);
 	}
+
+
+	/*for (size_t j = 1; j < 21; j++)
+	{
+		omp_set_num_threads(j);
+		printf("number of threads:%d\n\n", j);
+		for (size_t i = 0; i < 5; i++)
+		{
+			start = omp_get_wtime();
+			multiply_d(a, a, a2);
+			multiply_d(a2, b, a2b);
+			multiply_d(c, c, c2);
+			sum_d(a2b, c2, res);
+			stop = omp_get_wtime();
+			printf("Elapsed time = %lf seconds\n", ((double)(stop - start)));
+		}
+	}*/
 
 	// print simple test case of data to be sure multiplication is correct
 
