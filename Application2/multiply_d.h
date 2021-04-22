@@ -8,6 +8,7 @@ void multiply_d(double a[][NUM], double b[][NUM], double c[][NUM])
 #pragma omp parallel for
 	for (i = 0; i < NUM; i++) {
 		for (j = 0; j < NUM; j++) {
+			c[i][j]=0;
 			//2 #pragma omp parallel for
 			for (k = 0; k < NUM; k++) {
 				c[i][j] = c[i][j] + a[i][k] * b[k][j];
