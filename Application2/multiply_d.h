@@ -30,9 +30,9 @@ void sum_d(double a[][NUM], double b[][NUM], double c[][NUM]) {
 
 void multiply_d_mkl(double a[][NUM], double b[][NUM], double c[][NUM]) {
 	int i, j;
+#pragma omp parallel for
 	for ( i = 0; i < NUM; i++)
 	{
-#pragma omp parallel for
 		for (j = 0; j < NUM; j++)
 		{
 			c[j][i] = cblas_ddot(NUM, a[j], 1, b[NUM - i - 1], 1);
